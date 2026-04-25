@@ -69,6 +69,57 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+## Testing
+
+### Unit tests
+
+Unit tests cover `src/lib/sweetspot.ts` — all response shapes and error paths are exercised with a mocked `fetch`.
+
+```bash
+npm test          # run once
+npm run test:watch  # watch mode
+```
+
+### Live API integration test
+
+Hits the real Sweetspot / Golfstar API and prints a human-readable summary so you can verify connectivity and inspect the actual response shape.
+
+```bash
+npm run test:api
+```
+
+Expected output when the API is reachable:
+
+```
+════════════════════════════════════════════════════════════
+  Sweetspot / Golfstar API — live integration test
+════════════════════════════════════════════════════════════
+  Base URL : https://api.sweetspot.io
+  Club     : golfstar-golf-club
+  Date     : 2025-06-16
+────────────────────────────────────────────────────────────
+
+📋  Fetching courses …
+✅  2 course(s) returned
+    • [course-1] Golfstar Nord — 18 holes
+    • [course-2] Golfstar Syd — 9 holes
+
+⏰  Fetching tee times for "Golfstar Nord" on 2025-06-16 …
+✅  8 tee time(s) returned
+    • 08:00  slots: 3/4  price: 450 SEK
+    ...
+
+════════════════════════════════════════════════════════════
+  All checks passed — the Golfstar API is reachable ✅
+════════════════════════════════════════════════════════════
+```
+
+You can override the target club by setting environment variables:
+
+```bash
+SWEETSPOT_CLUB_SLUG=another-club npm run test:api
+```
+
 ## Deployment
 
 ### Vercel (recommended)
